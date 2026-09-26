@@ -552,14 +552,80 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: { Args: { _token: string }; Returns: string }
+      add_relative: {
+        Args: {
+          _anchor_id: string
+          _birth_year?: number
+          _family_id: string
+          _is_child_record?: boolean
+          _kind?: Database["public"]["Enums"]["filiation_kind"]
+          _name: string
+          _other_parent_id?: string
+          _relation: string
+          _sibling_parent_ids?: string[]
+          _vital?: Database["public"]["Enums"]["vital_status"]
+        }
+        Returns: string
+      }
       can_write_family: { Args: { _family_id: string }; Returns: boolean }
+      create_family: {
+        Args: { _name: string; _person_name: string }
+        Returns: string
+      }
+      create_invitation: {
+        Args: {
+          _days?: number
+          _family_id: string
+          _max_uses?: number
+          _token: string
+        }
+        Returns: string
+      }
+      create_self_person: {
+        Args: {
+          _anchor_id?: string
+          _family_id: string
+          _name: string
+          _relation?: string
+        }
+        Returns: string
+      }
+      export_family: { Args: { _family_id: string }; Returns: Json }
       family_role_of: {
         Args: { _family_id: string }
         Returns: Database["public"]["Enums"]["family_role"]
       }
+      invitation_preview: {
+        Args: { _token: string }
+        Returns: {
+          family_id: string
+          family_name: string
+          reason: string
+          valid: boolean
+        }[]
+      }
       is_family_admin: { Args: { _family_id: string }; Returns: boolean }
       is_family_member: { Args: { _family_id: string }; Returns: boolean }
+      link_persons: {
+        Args: {
+          _a: string
+          _b: string
+          _family_id: string
+          _kind?: Database["public"]["Enums"]["filiation_kind"]
+          _relation: string
+        }
+        Returns: undefined
+      }
       manages_person: { Args: { _person_id: string }; Returns: boolean }
+      request_claim: {
+        Args: { _family_id: string; _note?: string; _person_id: string }
+        Returns: string
+      }
+      review_claim: {
+        Args: { _approve: boolean; _claim_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       date_precision: "exact" | "year" | "approx" | "unknown"
